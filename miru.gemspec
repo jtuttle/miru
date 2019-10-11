@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Julia Tuttle']
   spec.email         = ['jtuttle.dev@gmail.com']
 
-  spec.summary       = 'An Entity Component System framework for Ruby'
-  spec.description   = 'An Entity Component System framework for Ruby'
+  spec.summary       = 'A simple event listener for Ruby'
+  spec.description   = 'A simple event listener for Ruby'
   spec.homepage      = 'https://github.com/jtuttle/miru'
   spec.license       = 'MIT'
 
