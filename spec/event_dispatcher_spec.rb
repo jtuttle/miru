@@ -5,14 +5,7 @@ RSpec.describe Miru::EventDispatcher do
   let(:dispatcher) { Dispatcher.new }
   
   describe "adding an event listener" do
-    it "dispatcher calls the registered method" do
-      dispatcher.add_event_listener(:test, observer.method(:on_test))
-      dispatcher.dispatch
-      
-      expect(observer.count).to eq(1)
-    end
-
-    it "raises an error if method is already registered" do
+    it "raises error if the method is already registered for the given event" do
       expect {
         dispatcher.add_event_listener(:test, observer.method(:on_test))
         dispatcher.add_event_listener(:test, observer.method(:on_test))
@@ -21,7 +14,7 @@ RSpec.describe Miru::EventDispatcher do
   end
 
   describe "removing an event listener" do
-    it "dispatcher does not call the previously registered method" do
+    it "previously registered method is not called if listener is removed" do
       dispatcher.add_event_listener(:test, observer.method(:on_test))
       dispatcher.remove_event_listener(:test, observer.method(:on_test))
       dispatcher.dispatch
@@ -29,10 +22,19 @@ RSpec.describe Miru::EventDispatcher do
       expect(observer.count).to eq(0)
     end
 
-    it "raises an error if no methods are registered" do
+    it "raises error if the method is not registered for the given event" do
       expect {
         dispatcher.remove_event_listener(:test, observer.method(:on_test))
       }.to raise_error(StandardError)
+    end
+  end
+
+  describe "dispatching an event" do
+    it "the registered method is called when the matching event is dispatched" do
+      dispatcher.add_event_listener(:test, observer.method(:on_test))
+      dispatcher.dispatch
+      
+      expect(observer.count).to eq(1)
     end
   end
 end
